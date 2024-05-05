@@ -10,7 +10,7 @@
 .navbar{
     height: 10vh;
 }
-.content{
+.content-center{
     height: 90vh;
 }
 .code{
@@ -22,10 +22,32 @@
     display: flex;
     justify-content: left;
     align-items: center;
+    margin-bottom: 2rem;
 }
 .code code {
     display: flex;
     font-family: monospace;
     padding-bottom: 20px;
 
+}
+.input-text{
+    margin-bottom: 1rem;
+    padding: 5px;
+    border: 1px solid black;
+}
+.url-input{
+    width: 50%;
+}
+#post-providers, #post-products-providers, #put-providers, #put-products-providers{
+    display: none;
+}
+select{
+    border: 1px solid black;
+    margin-bottom: 1rem;
+}
+td{
+    text-align: center;
+}
+.product-id-td{
+    cursor: pointer;
 }
