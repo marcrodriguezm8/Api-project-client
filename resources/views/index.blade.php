@@ -14,7 +14,7 @@
     </head>
     <body class="antialiased">
         <x-navbar></x-navbar>
-        <div class="content flex justify-center items-center">
+        <div class="content flex justify-center items-center content-center">
             <h1 class="text-3xl text-red-500">API COMPONENTES DE ORDENADORES Y PROVEEDORES</h1>
         </div>
     </body>
