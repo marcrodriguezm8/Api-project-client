@@ -20,7 +20,7 @@
         </li>-->
         <li>
 
-            @if(!session('user_token'))
+            @if(!Auth::user())
                 <a href="{{route('login.index')}}">Iniciar Sesión</a>
             @else
                 <a href="{{route('logout')}}">Cerrar Sesión</a>
