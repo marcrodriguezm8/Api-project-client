@@ -15,24 +15,22 @@ class LoginController extends Controller
         return view('login');
     }
     public function auth(Request $request){
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        if(Auth::attempt($credentials)){
-            $response = Http::post('http://localhost:8000/api/login', [
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
-            if($response->successful()) {
-                $response = $response->json();
-                $token = $response['token'];
-                session(['user_token' => $token]);
 
-                return Redirect::route('index');
-            }
+        $response = Http::post('http://localhost:8000/api/login', [
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+        if($response->successful()) {
+
+            $response = $response->json();
+            $token = $response['token'];
+            session(['user_token' => $token]);
+            Auth::attempt($response['credentials']);
+
+            return Redirect::route('index');
         }
-        return Redirect::route('login.index')->with('error', 'Email o contraseña incorrectos.');
+
+        return Redirect::route('login.index')->with('error', $response->json());
 
     }
 }

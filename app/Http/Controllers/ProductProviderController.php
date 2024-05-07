@@ -23,18 +23,23 @@ class ProductProviderController extends Controller
             'Authorization' => 'Bearer '. session('user_token'),
         ])->post(env('API_ROUTE').'products-providers', $request->all());
 
-        return Redirect::route('products-providers.index')->with('response', $response->json());
+        if($response->successful()) return Redirect::route('products-providers.index')->with('success', $response->json());
+        else return Redirect::route('products-providers.index')->with('error', $response->json());
     }
     public function update(Request $request){
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '. session('user_token'),
         ])->put(env('API_ROUTE').'products-providers/'.$request->id, $request->all());
-        return Redirect::route('products-providers.index')->with('response', $response->json());
+
+        if($response->successful()) return Redirect::route('products-providers.index')->with('success', $response->json());
+        else return Redirect::route('products-providers.index')->with('error', $response->json());
     }
     public function delete(Request $request){
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '. session('user_token'),
         ])->delete(env('API_ROUTE').'products-providers/'.$request->id);
-        return Redirect::route('products-providers.index')->with('response', $response->json());
+
+        if($response->successful()) return Redirect::route('products-providers.index')->with('success', $response->json());
+        else return Redirect::route('products-providers.index')->with('error', $response->json());
     }
 }

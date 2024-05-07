@@ -15,16 +15,16 @@
         <li>
             <a href="{{route('products-providers.index')}}">Products-Providers</a>
         </li>
-        <li>
+        <!--<li>
             <a href="{{route('apiUsage.index')}}">Pruebas</a>
-        </li>
+        </li>-->
         <li>
-            @if(!Auth::user())
-                <a href="{{route('login.index')}}">Iniciar Sesión</a>
 
+            @if(!session('user_token'))
+                <a href="{{route('login.index')}}">Iniciar Sesión</a>
             @else
                 <a href="{{route('logout')}}">Cerrar Sesión</a>
-            @endauth
+            @endif
 
         </li>
     </ul>

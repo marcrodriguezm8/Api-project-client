@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ApiUsageController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\ProductProviderController;
 
@@ -25,6 +26,8 @@ use App\Http\Controllers\ProductProviderController;
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'auth'])->name('login.auth');
+Route::get('/register', [RegisterController::class, 'index'])->name('register.index');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.register');
 Route::get('/docs', [DocsController::class, 'index'])->name('docs.index');
 
 
