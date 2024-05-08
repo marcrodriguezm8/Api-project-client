@@ -11,8 +11,11 @@ class ProductsController extends Controller
 {
     //
     public function index(){
-        $products = Product::all();
-        return view('products', ['products' => $products]);
+        $products = Http::withHeaders([
+            'Authorization' => 'Bearer '. session('user_token'),
+        ])->get(env('API_ROUTE').'products');
+
+        return view('products', ['products' => $products->json()]);
     }
 
     public function store(Request $request){

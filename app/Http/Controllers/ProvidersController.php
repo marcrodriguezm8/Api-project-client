@@ -11,8 +11,11 @@ class ProvidersController extends Controller
 {
     //
     public function index(){
-        $providers = Provider::all();
-        return view('providers', ['providers' => $providers]);
+        $providers = Http::withHeaders([
+            'Authorization' => 'Bearer '. session('user_token'),
+        ])->get(env('API_ROUTE').'providers');
+
+        return view('providers', ['providers' => $providers->json()]);
     }
 
     public function store(Request $request){

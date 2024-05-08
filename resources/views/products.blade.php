@@ -132,12 +132,11 @@
                           <th scope="col" class="px-6 py-3"></th>
                       </tr>
                   </thead>
-                  <tbody>
 
-                    @if(sizeof($products) != 0)
-                        @foreach ($products as $product)
+                    @if(gettype($products['data']) == "array")
+                        @foreach ($products['data'] as $product)
                         <tr class="row bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            @foreach ($product->getAttributes() as $key => $value)
+                            @foreach ($product as $key => $value)
 
                             @if ($key != 'created_at' && $key != 'updated_at')
                             <td scope="row" class="td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -145,11 +144,11 @@
                             </td>
                             @endif
                             @endforeach
-                            <td><button type="button" id="btn-edit-{{$product->id}}" class="edit-btn text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">EDITAR</button></td>
+                            <td><button type="button" id="btn-edit-{{$product['id']}}" class="edit-btn text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">EDITAR</button></td>
                             <td><form action="{{route('products.delete')}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" name="id" value="{{$product->id}}" id="btn-delete-{{$product->id}}" class="delete-btn focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">ELIMINAR</button>
+                                <button type="submit" name="id" value="{{$product['id']}}" id="btn-delete-{{$product['id']}}" class="delete-btn focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">ELIMINAR</button>
                             </form></td>
                         </tr>
                         @endforeach
