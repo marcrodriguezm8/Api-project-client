@@ -22,7 +22,7 @@ forms.forEach(form => {
         const formData = new FormData(form)
         const method = form.querySelector('.input-text').getAttribute('data-method');
         formData.append('method', method);
-        console.log(Object.fromEntries(formData))
+
         fetch('/api-usage/getAll', {
             method: 'POST',
             body: formData
@@ -63,13 +63,11 @@ const allProductsId = document.querySelectorAll('.product-id-td')
 
 allProductsId.forEach(id => {
     id.addEventListener('mouseenter', (event) => {
-        console.log(event.target)
         const popOver = event.target.nextElementSibling
         popOver.classList.remove('opacity-0')
         popOver.classList.remove('invisible')
     })
     id.addEventListener('mouseout', (event) => {
-        console.log('hola')
         const popOver = event.target.nextElementSibling
         popOver.classList.add('opacity-0')
         popOver.classList.add('invisible')
@@ -83,30 +81,35 @@ closeModalBtns.forEach(btn => {
     })
 })
 
-productsTable.addEventListener("click", (event) => {
-    if(event.target.className.includes('edit-btn')){
-        productModalEdit.classList.remove('hidden')
+if(productsTable){
+    productsTable.addEventListener("click", (event) => {
+        if(event.target.className.includes('edit-btn')){
+            productModalEdit.classList.remove('hidden')
 
-        const row = event.target.closest('.row')
-        const tds = row.querySelectorAll('.td')
+            const row = event.target.closest('.row')
+            const tds = row.querySelectorAll('.td')
 
-        const formEditInputs = productModalEdit.querySelectorAll('.form-edit .edit-input')
-        console.log(row, tds, formEditInputs)
+            const formEditInputs = productModalEdit.querySelectorAll('.form-edit .edit-input')
 
-        formEditInputs.forEach((input, index) => {
-            if(tds[index].children.length > 0) {
-                console.log(tds[index].children[0].innerText)
-                input.value = tds[index].children[0].innerText
-            }
-            else {
+            formEditInputs.forEach((input, index) => {
+                if(tds[index].children.length > 0) {
+                    input.value = tds[index].children[0].innerText
+                }
+                else {
+                    if(input.type == 'number'){
+                        input.value = tds[index].innerText.replace(/\D/g, "");
+                    }
+                    else input.value = tds[index].innerText
+                }
 
-                input.value = tds[index].innerText
-            }
+            })
+        }
+    })
+}
 
-        })
-    }
-})
+if(addProductBtn){
+    addProductBtn.addEventListener("click", () => {
+        productModalAdd.classList.remove('hidden')
+    })
+}
 
-addProductBtn.addEventListener("click", () => {
-    productModalAdd.classList.remove('hidden')
-})

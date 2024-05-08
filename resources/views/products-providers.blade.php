@@ -139,66 +139,71 @@
                         $toPrint = ['product_provider_id', 'product_id', 'provider_id', 'product_price', 'product_stock']
                     @endphp
 
-                    @foreach ($productProviders['data'] as $productProvider)
-                      <tr class="row bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      @foreach ($productProvider as $key => $value)
+                    @if(gettype($productProviders['data']) == "array")
+                        @foreach ($productProviders['data'] as $productProvider)
+                        <tr class="row bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            @foreach ($productProvider as $key => $value)
 
-                      @if (in_array($key, $toPrint))
-                        @if($key == 'product_id')
-                        <td data-popover-target="popover-default" scope="row" class="relative td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <span class="product-id-td text-blue-700 underline">{{$value}}</span>
-                            <div data-popover id="popover-default" role="tooltip" class="absolute left-44 z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-                                <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
-                                    <h3 class="font-semibold text-gray-900 dark:text-white">{{$productProvider["product_name"]}}</h3>
+                            @if (in_array($key, $toPrint))
+                            @if($key == 'product_id')
+                            <td data-popover-target="popover-default" scope="row" class="relative td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <span class="product-id-td text-blue-700 underline">{{$value}}</span>
+                                <div data-popover id="popover-default" role="tooltip" class="absolute left-44 z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                    <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                                        <h3 class="font-semibold text-gray-900 dark:text-white">{{$productProvider["product_name"]}}</h3>
+                                    </div>
+                                    <div class="px-3 py-2 flex justify-start flex-col items-start">
+                                        <p>Code: {{$productProvider["product_code"]}}</p>
+                                        <p>Category: {{$productProvider["product_category"]}}</p>
+                                    </div>
+                                    <div data-popper-arrow></div>
                                 </div>
-                                <div class="px-3 py-2 flex justify-start flex-col items-start">
-                                    <p>Code: {{$productProvider["product_code"]}}</p>
-                                    <p>Category: {{$productProvider["product_category"]}}</p>
+                            </td>
+                            @elseif($key == 'provider_id')
+                            <td data-popover-target="popover-default" scope="row" class="relative td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <span class="product-id-td text-blue-700 underline">{{$value}}</span>
+                                <div data-popover id="popover-default" role="tooltip" class="absolute left-44 z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                    <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                                        <h3 class="font-semibold text-gray-900 dark:text-white">{{$productProvider["provider_name"]}}</h3>
+                                    </div>
+                                    <div class="px-3 py-2 flex justify-start flex-col items-start">
+                                        @isset($productProvider["provider_phone"])<p>Phone: {{$productProvider["provider_phone"]}}</p>@endisset
+                                        <p>Email: {{$productProvider["provider_email"]}}</p>
+                                        <p>Location: {{$productProvider["provider_location"]}}</p>
+                                    </div>
+                                    <div data-popper-arrow></div>
                                 </div>
-                                <div data-popper-arrow></div>
-                            </div>
-                        </td>
-                        @elseif($key == 'provider_id')
-                        <td data-popover-target="popover-default" scope="row" class="relative td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <span class="product-id-td text-blue-700 underline">{{$value}}</span>
-                            <div data-popover id="popover-default" role="tooltip" class="absolute left-44 z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-                                <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
-                                    <h3 class="font-semibold text-gray-900 dark:text-white">{{$productProvider["provider_name"]}}</h3>
-                                </div>
-                                <div class="px-3 py-2 flex justify-start flex-col items-start">
-                                    @isset($productProvider["provider_phone"])<p>Phone: {{$productProvider["provider_phone"]}}</p>@endisset
-                                    <p>Email: {{$productProvider["provider_email"]}}</p>
-                                    <p>Location: {{$productProvider["provider_location"]}}</p>
-                                </div>
-                                <div data-popper-arrow></div>
-                            </div>
-                        </td>
-                        @else
-                            @if($key == 'product_price')
-                                <td scope="row" class="td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{$value}} €
-                                </td>
-                            @elseif ($key == 'product_stock')
-                            <td scope="row" class="td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$value}} u
-                              </td>
+                            </td>
                             @else
-                            <td scope="row" class="td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$value}}
-                              </td>
-                            @endif
+                                @if($key == 'product_price')
+                                    <td scope="row" class="td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{$value}} €
+                                    </td>
+                                @elseif ($key == 'product_stock')
+                                <td scope="row" class="td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{$value}} u
+                                    </td>
+                                @else
+                                <td scope="row" class="td px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{$value}}
+                                    </td>
+                                @endif
 
-                        @endif
-                      @endif
-                      @endforeach
-                        <td><button type="button" id="btn-edit-{{$productProvider['product_provider_id']}}" class="edit-btn text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">EDITAR</button></td>
-                        <td><form action="{{route('products-providers.delete')}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" name="id" value="{{$productProvider['product_provider_id']}}" id="btn-delete-{{$productProvider['product_provider_id']}}" class="delete-btn focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">ELIMINAR</button>
-                        </form></td>
-                    </tr>
-                    @endforeach
+                            @endif
+                            @endif
+                            @endforeach
+                            <td><button type="button" id="btn-edit-{{$productProvider['product_provider_id']}}" class="edit-btn text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">EDITAR</button></td>
+                            <td><form action="{{route('products-providers.delete')}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" name="id" value="{{$productProvider['product_provider_id']}}" id="btn-delete-{{$productProvider['product_provider_id']}}" class="delete-btn focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">ELIMINAR</button>
+                            </form></td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <p>No existen productos-proveedores</p>
+                    @endif
+
                   </tbody>
               </table>
         </div>
