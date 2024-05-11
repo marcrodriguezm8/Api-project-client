@@ -20,7 +20,7 @@
                 @if (session('error'))
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)"
                     class="mb-5 text-red-600 text-sm ">{{ session('error') }}</p>
-                    @endif
+                @endif
                 <form method="POST" action="{{route('register.register')}}">
                     @csrf
                     <!-- Name -->

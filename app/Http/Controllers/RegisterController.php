@@ -24,7 +24,7 @@ class RegisterController extends Controller
             return Redirect::route('login.index')->with('success', $response->json());
         }
 
-        return Redirect::route('login.index')->with('error', $response->json());
+        return Redirect::route('register.index')->with('error', $response->json());
 
     }
 }
