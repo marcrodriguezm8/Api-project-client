@@ -97,7 +97,7 @@ if(productsTable){
                 }
                 else {
                     if(input.type == 'number'){
-                        input.value = tds[index].innerText.replace(/\D/g, "");
+                        input.value = parseFloat(tds[index].innerText);
                     }
                     else input.value = tds[index].innerText
                 }
