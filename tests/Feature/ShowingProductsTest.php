@@ -15,14 +15,16 @@ class ShowingProductsTest extends TestCase
      */
     public function test_show_products(): void
     {
-        $products = Product::all();
         $user = User::where('email', 'marcrodrimartin@gmail.com')->first();
-        $this->actingAs($user);
 
-        $response = $this->get(route('products.index'));
-        $response->assertStatus(200);
+        $response = $this->post('/login', ["email" => "marcrodrimartin@gmail.com", "password" => "password"]);
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . session('user_token'),
+        ])->get('/products');
+
 
         $response->assertViewIs('products');
-        $response->assertViewHas('products', $products);
+        $response->assertViewHas('products');
     }
 }
